@@ -6,6 +6,8 @@
 <video controls title="Wiimmfi's auto-reload functionality" src="https://codeberg.org/RuralAnemone/mkwii-rpc/raw/branch/main/assets/wiimmfi-auto-reload-example.mp4"></video>
 </details>
 
+therefore this script doesn't abuse the service.
+
 this script <!--does--> will do <!--don't convert the rest to infinitive or future perfect or whatever bro it's fine--> the following:
 
 - uses some relative bloatware[^bloatware] for friendcode/pid input
