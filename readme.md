@@ -4,7 +4,7 @@
 
 <details><summary>Wiimmfi's MKWii status page has auto-reload with a bunch of useful stats</summary>
 <video controls title="Wiimmfi's auto-reload functionality">
-<source src="./assets/wiimmfi-auto-reload-example.mp4" type="video/mp4">
+<source src="https://codeberg.org/RuralAnemone/mkwii-rpc/raw/branch/main/assets/wiimmfi-auto-reload-example.mp4" type="video/mp4">
 </video>
 </details>
 
