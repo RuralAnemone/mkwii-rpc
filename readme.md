@@ -3,20 +3,20 @@
 ## how to use
 
 - clone the repo
-- setup a venv
-
-```sh
-python -m venv .venv && source .venv/bin/activate
-```
-
 - install deps
 
 ```sh
-pip install -r requirements.txt
+npm i
 ```
 
-- run main.py
+- run index.mjs
 
 ```sh
-python main.py
+node index.mjs
+```
+
+or just run the start script if you have muscle memory
+
+```sh
+npm start
 ```
