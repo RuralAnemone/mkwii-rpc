@@ -1,5 +1,28 @@
 {
+  "name": "mkwii-rpc",
+  "version": "0.0.0",
+  "description": "a Discord Rich Presence (RPC) app that shows your Mario Kart Wii on Wiimmfi status. eventually will be customizable. deps: blessed, discord-rich-presence, puppeteer.",
+  "keywords": [
+    "discord-rpc",
+    "discord-rich-presence",
+    "mkwii",
+    "mario-kart-wii",
+    "wiimmfi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://codeberg.org/RuralAnemone/mkwii-rpc"
+  },
+  "license": "GPL-3.0-or-later",
+  "author": "RuralAnemone",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "cowsay \"not implemented lol, it just works ¯\\_(ツ)_/¯\""
+  },
   "dependencies": {
+    "@types/blessed": "^0.1.25",
     "blessed": "^0.1.81",
     "discord-rich-presence": "^0.0.8",
     "puppeteer": "^24.27.0"
