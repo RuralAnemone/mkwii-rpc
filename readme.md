@@ -3,7 +3,9 @@
 ## how this works
 
 <details><summary>Wiimmfi's MKWii status page has auto-reload with a bunch of useful stats</summary>
-![Wiimmfi's auto-reload functionality](./assets/wiimmfi-auto-reload-example.mp4)
+<video controls title="Wiimmfi's auto-reload functionality">
+<source src="./assets/wiimmfi-auto-reload-example.mp4" type="video/mp4">
+</video>
 </details>
 
 this script <!--does--> will do <!--don't convert the rest to infinitive or future perfect or whatever bro it's fine--> the following:
