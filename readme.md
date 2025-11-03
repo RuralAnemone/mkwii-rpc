@@ -17,19 +17,15 @@ therefore this script doesn't abuse the service.
 
 this script <!--does--> will do <!--don't convert the rest to infinitive or future perfect or whatever bro it's fine--> the following:
 
-- uses some relative bloatware[^bloatware] for friendcode/pid input
-  - if you input a friendcode, find related pid on `wiimmfi.de/stats/mkw`[^scraper]
-  - if you input a pid, just use that
-  - otherwise yell at the user a little bit
 - open `wiimmfi.de/stats/mkw/room/p{pid}`[^scraper] and parse room and player details into a (configurable?) discord rich presence[^rpc]
+- if you configure `mkw-ana`, use that to glean extra useful and configurable details
 
 <!-- <details><summary>see it in action</summary>
 ![usage](./assets/usage.mp4)
 </details> -->
 
-[^bloatware]: [npm/blessed](https://www.npmjs.com/package/blessed)
 [^scraper]: [npm/puppeteer](https://www.npmjs.com/package/puppeteer) — yeah I know it uses chrome, deal with it ![mlg](./assets/mlg.png). also you're clearly using discord so uhh
-[^rpc]: [npm/discord-rich-presence](https://www.npmjs.com/package/discord-rich-presence)
+[^rpc]: [npm/discord-rpc](https://www.npmjs.com/package/discord-rpc)
 
 ## how to use
 
