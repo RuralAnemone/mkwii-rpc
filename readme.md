@@ -1,5 +1,12 @@
 # MKWii Discord RPC
 
+heavily inspired by [dotcomboom's rich presence utility](https://github.com/dotcomboom/mkwii-presence)
+
+## *planned* features:
+
+- optional `mkw-ana` enhancements (ENSURE PLATFORM INDIFFERENCE) i.e. showing your Mii, smaller ratelimit maybe idk I think discord rpc is still ratelimited at 0.2Hz
+- basically just going off dotcomboom for now
+
 ## how this works
 
 <details><summary>Wiimmfi's MKWii status page has auto-reload with a bunch of useful stats</summary>
