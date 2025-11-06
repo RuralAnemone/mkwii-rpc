@@ -15,17 +15,18 @@
   },
   "license": "GPL-3.0-or-later",
   "author": "RuralAnemone",
+  "type": "module",
   "main": "index.mjs",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.mjs",
     "test": "cowsay \"not implemented lol, it just works ¯\\_(ツ)_/¯\""
   },
   "dependencies": {
-    "@types/discord-rich-presence": "^0.0.2",
-    "discord-rich-presence": "^0.0.8",
+    "discord-rpc": "^4.0.1",
     "puppeteer": "^24.27.0"
   },
   "devDependencies": {
+    "@types/discord-rpc": "^4.0.9",
     "@types/puppeteer": "^5.4.7"
   }
 }
