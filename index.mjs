@@ -3,7 +3,7 @@
 
 import { log } from "console";
 import { Client } from "discord-rpc";
-import "dotenv/config";
+// import "dotenv/config";
 import process from "process";
 import puppeteer from "puppeteer";
 
@@ -18,6 +18,20 @@ const env = {
 	// MKW_ANA_COMMAND="tcpdump -w- -U -i eth1 host wii | tee save.dump | mkw-ana"
 };
 
+const trackNames = ["Luigi Circuit","Moo Moo Meadows","Mushroom Gorge","Toad's Factory","Mario Circuit","Coconut Mall","DK Summit","Wario's Gold Mine","Daisy Circuit","Koopa Cape","Maple Treeway","Grumble Volcano","Dry Dry Ruins","Moonview Highway","Bowser's Castle","Rainbow Road","GCN Peach Beach","DS Yoshi Falls","SNES Ghost Valley 2","N64 Mario Raceway","N64 Sherbet Land","GBA Shy Guy Beach","DS Delfino Square","GCN Waluigi Stadium","DS Desert Hills","GBA Bowser Castle 3","N64 DK's Jungle Parkway","GCN Mario Circuit","SNES Mario Circuit 3","DS Peach Gardens","GCN DK Mountain","N64 Bowser's Castle","Block Plaza","Delfino Pier","Funky Stadium","Chain Chomp Wheel","Thwomp Desert","SNES Battle Course 4","GBA Battle Course 3","N64 Skyscraper","GCN Cookie Land","DS Twilight House","Winningrun Demo","Loser Demo","Ending Demo","Old Mario GC B","Ring Mission","Draw Demo","Old Mario GC Narita","Commonobj01","Commonobj03","Commonobj05","Commonobj07","Commonobj09","Commonobj11"]
+
+// destructively shorten track name, for use in image keys. should I just use the .szs file names and have a lookup table with some other useful info?\
+// idk I don't really feel like it rn lol
+function shortenTrackName(name = "") {
+	// name = name.toLowerCase();
+	// name = name.replaceAll("'", "");
+	// name = name.replaceAll(" ", "-");
+
+	// return name;
+
+	return name.toLowerCase().replaceAll("'", "").replaceAll(" ", "-");
+}
+
 /* async function wait(ms) {
 	return new Promise((res, _rej) => {
 		setTimeout(res, ms);
@@ -30,22 +44,23 @@ const rpc = new Client({
 
 const start = Date.now();
 
+// set to init
 const activity = {
-	details: "maro kar whii rpc",
-	state: "bro idk why this timer is ratelimited",
+	details: "Starting puppeteer",
+	state: "Initializing...",
 	startTimestamp: start,
 	largeImageKey: "large-image",
-	largeImageText: "like I just set it to Date.now() and set it once",
+	largeImageText: "live calvin's dad reaction",
 	smallImageKey: "small-image",
-	smallImageText: "whys it gotta update every 15 seconds at minimum",
+	smallImageText: "me 4 years ago",
 	instance: false,
 	buttons: [
 		{
-			label: "Join us",
-			url: "https://discord.com/invite/your-invite-link",
+			label: "butonn",
+			url: "https://exmaple.com",
 		},
 		{
-			label: "Learn More",
+			label: "button",
 			url: "https://example.com",
 		},
 	],
