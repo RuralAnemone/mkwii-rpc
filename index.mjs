@@ -28,14 +28,16 @@ const rpc = new Client({
 	transport: "ipc",
 });
 
+const start = Date.now()
+
 const activity = {
-	details: "Developing a Discord RPC",
-	state: "In the zone",
-	startTimestamp: new Date(),
-	largeImageKey: "large-image", // Add your large image key
-	largeImageText: "Large Image Text",
-	smallImageKey: "small-image", // Add your small image key
-	smallImageText: "Small Image Text",
+	details: "maro kar whii rpc",
+	state: "bro idk why this timer is ratelimited",
+	startTimestamp: start,
+	largeImageKey: "large-image",
+	largeImageText: "like I just set it to Date.now() and set it once",
+	smallImageKey: "small-image",
+	smallImageText: "whys it gotta update every 15 seconds at minimum",
 	instance: false,
 	buttons: [
 		{
@@ -55,7 +57,7 @@ function setActivity(client = rpc) {
 			client.setActivity(activity);
 			console.log("RPC set!");
 		} catch (error) {
-			console.error(`Failed to start RPC.\n${error}\n${error.stack}`);
+			console.error(`Failed to start RPC.`);
 			setTimeout(updateActivity, env.RECONNECT_TIMEOUT);
 		}
 	};
@@ -71,7 +73,7 @@ async function loginRpc() {
 			clientSecret: env.CLIENT_SECRET
 		});
 	} catch (error) {
-		console.error(`uh oh! couldn't log in ):\n${error}\n${error.stack}`);
+		console.error(`uh oh! couldn't log in ):`);
 		setTimeout(loginRpc, env.RECONNECT_TIMEOUT);
 	}
 }
