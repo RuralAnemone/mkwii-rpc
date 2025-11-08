@@ -55,14 +55,14 @@ process.on("SIGINT", async () => {
 	}
 });
 
-const wf = new Wiimmfi("insert your cf_clearance cookie here");
+const wf = new Wiimmfi("I should really put this in the .env huh");
 
 await wf.launch();
 
-setInterval(() => {
+setInterval(async () => {
 	rpc.setActivity({
-		"details": "Starting puppeteer",
-		"state": `bruh. it's ${(new Date).toISOString()}`,
+		"details": "poring over stats",
+		"state": `there are ${await wf.getLiveRoomCount()} live rooms`,
 		"startTimestamp": Date.now(),
 		"largeImageKey": "large-image",
 		"largeImageText": "live dad reaction",
@@ -80,6 +80,6 @@ setInterval(() => {
 			}
 		]
 	})
-}, 10e3)
+}, 5e3)
 
 rpc.loginRpc();
