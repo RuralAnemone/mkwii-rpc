@@ -49,3 +49,7 @@ or just run the start script if you have muscle memory
 ```sh
 npm start
 ```
+
+---
+
+###### *this program was brought to you by the human brain. no LLMs were used in the making of this program*

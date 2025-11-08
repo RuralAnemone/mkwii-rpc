@@ -55,13 +55,13 @@ process.on("SIGINT", async () => {
 	}
 });
 
-const wf = new Wiimmfi("I should really put this in the .env huh");
+const wf = new Wiimmfi("next commit I swear");
 
 await wf.launch();
 
 setInterval(async () => {
 	rpc.setActivity({
-		"details": "poring over stats",
+		"details": "poring over stats (updating every minute)",
 		"state": `there are ${await wf.getLiveRoomCount()} live rooms`,
 		"startTimestamp": Date.now(),
 		"largeImageKey": "large-image",
@@ -80,6 +80,6 @@ setInterval(async () => {
 			}
 		]
 	})
-}, 5e3)
+}, 60e3)
 
 rpc.loginRpc();
