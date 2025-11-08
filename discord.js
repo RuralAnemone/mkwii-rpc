@@ -43,7 +43,6 @@ class DiscordRPC {
 		try {
 			await this.client.login({
 				clientId: this.env.CLIENT_ID,
-				clientSecret: "uuUAdl1NHVAQ4c9KLtk-aQleo6dL7VK9"
 			});
 		} catch (error) {
 			console.error(`uh oh! couldn't log in ):`);
