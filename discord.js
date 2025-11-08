@@ -1,7 +1,7 @@
 import { Client } from "discord-rpc";
-import "dotenv/config"
+import "dotenv/config";
 
-import states from "./states.json" with { type: "json" }
+import states from "./states.json" with { type: "json" };
 
 class DiscordRPC {
 	CLIENT_ID = process.env.CLIENT_ID ?? "1432098284922736740";
@@ -11,7 +11,7 @@ class DiscordRPC {
 		this.client = new Client({
 			transport: "ipc",
 		});
-		states.INIT.startTimestamp = Date.now()
+		states.INIT.startTimestamp = Date.now();
 		this.activity = states.INIT;
 	}
 
@@ -21,25 +21,21 @@ class DiscordRPC {
 			this.client.login({
 				clientId: this.CLIENT_ID,
 			});
-			console.log("logged in")
+			console.log("logged in");
 		} catch (error) {
 			console.error(`uh oh! couldn't log in ):`);
 			console.error(error, error.stack);
 		}
 	}
 
-	setActivity() {
-		const updateActivity = _ => {
-			try {
-				this.client.setActivity(this.activity);
-				console.log("RPC set!");
-			} catch (error) {
-				console.error(`Failed to start RPC.`);
-				console.error(error, error.stack);
-			}
-		};
-	
-		updateActivity();
+	setActivity(activity = this.activity) {
+		try {
+			this.client.setActivity(activity);
+			console.log("RPC set!");
+		} catch (error) {
+			console.error(`Failed to start RPC.`);
+			console.error(error, error.stack);
+		}
 	}
 }
 

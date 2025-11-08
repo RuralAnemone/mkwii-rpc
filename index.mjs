@@ -1,7 +1,9 @@
-import { DiscordRPC } from "./discord.js";
 import "dotenv/config";
 import process from "process";
-import puppeteer from "puppeteer";
+
+import { DiscordRPC } from "./discord.js";
+import { Wiimmfi } from "./wiimmfi.js"
+
 
 const rpc = new DiscordRPC();
 
@@ -23,6 +25,11 @@ function shortenTrackName(name = "") {
 	return new Promise((res, _rej) => {
 		setTimeout(res, ms);
 	});
+} */
+
+/* function updatePresence(newPresence) {
+	// maybe do some other stuff?
+	rpc.setActivity(newPresence);
 } */
 
 rpc.client.on("ready", () => {
@@ -48,10 +55,31 @@ process.on("SIGINT", async () => {
 	}
 });
 
+const wf = new Wiimmfi();
+
+await wf.launch();
+
+setInterval(() => {
+	rpc.setActivity({
+		"details": "Starting puppeteer",
+		"state": `bruh. it's ${(new Date).toISOString()}`,
+		"startTimestamp": Date.now(),
+		"largeImageKey": "large-image",
+		"largeImageText": "live dad reaction",
+		"smallImageKey": "small-image",
+		"smallImageText": "me 4 years ago",
+		"instance": false,
+		"buttons": [
+			{
+				"label": "butonn",
+				"url": "https://exmaple.com"
+			},
+			{
+				"label": "button",
+				"url": "https://example.com"
+			}
+		]
+	})
+}, 10e3)
+
 rpc.loginRpc();
-
-const browser = await puppeteer.launch();
-const page = await browser.newPage();
-
-// default to my main mii's stats page
-await page.goto(`https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`);
