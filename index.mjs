@@ -55,7 +55,7 @@ process.on("SIGINT", async () => {
 	}
 });
 
-const wf = new Wiimmfi();
+const wf = new Wiimmfi("insert your cf_clearance cookie here");
 
 await wf.launch();
 
