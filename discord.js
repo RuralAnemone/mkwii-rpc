@@ -1,53 +1,30 @@
 import { Client } from "discord-rpc";
-// import "dotenv/config"
-// import process from "process";
+import "dotenv/config"
+
+import states from "./states.json" with { type: "json" }
 
 class DiscordRPC {
-	
+	CLIENT_ID = process.env.CLIENT_ID ?? "1432098284922736740";
 
 	constructor() {
 		this.start = Date.now();
 		this.client = new Client({
 			transport: "ipc",
 		});
-
-		this.env = {
-			CLIENT_ID: "1432098284922736740",
-		};
-
-		this.activity = {
-			details: "Starting puppeteer",
-			state: "Initializing...",
-			startTimestamp: Date.now(),
-			largeImageKey: "large-image",
-			largeImageText: "live calvin's dad reaction",
-			smallImageKey: "small-image",
-			smallImageText: "me 4 years ago",
-			instance: false,
-			buttons: [
-				{
-					label: "butonn",
-					url: "https://exmaple.com",
-				},
-				{
-					label: "button",
-					url: "https://example.com",
-				},
-			],
-		};
+		states.INIT.startTimestamp = Date.now()
+		this.activity = states.INIT;
 	}
 
 	async loginRpc() {
 		console.log("logging in");
-		console.log(this.env)
 		try {
-			await this.client.login({
-				clientId: this.env.CLIENT_ID,
+			this.client.login({
+				clientId: this.CLIENT_ID,
 			});
+			console.log("logged in")
 		} catch (error) {
 			console.error(`uh oh! couldn't log in ):`);
-			console.error(error, error.stack)
-			// setTimeout(this.loginRpc, this.env.RECONNECT_TIMEOUT);
+			console.error(error, error.stack);
 		}
 	}
 
@@ -58,8 +35,7 @@ class DiscordRPC {
 				console.log("RPC set!");
 			} catch (error) {
 				console.error(`Failed to start RPC.`);
-				console.error(error, error.stack)
-				// setTimeout(updateActivity, this.env.RECONNECT_TIMEOUT);
+				console.error(error, error.stack);
 			}
 		};
 	
@@ -67,5 +43,4 @@ class DiscordRPC {
 	}
 }
 
-// module.exports = { DiscordRPC };
 export { DiscordRPC };

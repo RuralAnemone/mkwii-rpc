@@ -1,18 +1,11 @@
+import { DiscordRPC } from "./discord.js";
+import "dotenv/config";
 import process from "process";
 import puppeteer from "puppeteer";
-import { DiscordRPC } from "./discord.js"
 
 const rpc = new DiscordRPC();
 
-// defaults
-const env = {
-	STATUS_TEXT: "testin mkw-rpc lol",
-	PID: "603151246",
-	// MKW_ANA_ENABLED=false
-	// MKW_ANA_COMMAND="tcpdump -w- -U -i eth1 host wii | tee save.dump | mkw-ana"
-};
-
-const trackNames = ["Luigi Circuit","Moo Moo Meadows","Mushroom Gorge","Toad's Factory","Mario Circuit","Coconut Mall","DK Summit","Wario's Gold Mine","Daisy Circuit","Koopa Cape","Maple Treeway","Grumble Volcano","Dry Dry Ruins","Moonview Highway","Bowser's Castle","Rainbow Road","GCN Peach Beach","DS Yoshi Falls","SNES Ghost Valley 2","N64 Mario Raceway","N64 Sherbet Land","GBA Shy Guy Beach","DS Delfino Square","GCN Waluigi Stadium","DS Desert Hills","GBA Bowser Castle 3","N64 DK's Jungle Parkway","GCN Mario Circuit","SNES Mario Circuit 3","DS Peach Gardens","GCN DK Mountain","N64 Bowser's Castle","Block Plaza","Delfino Pier","Funky Stadium","Chain Chomp Wheel","Thwomp Desert","SNES Battle Course 4","GBA Battle Course 3","N64 Skyscraper","GCN Cookie Land","DS Twilight House"]
+const trackNames = ["Luigi Circuit", "Moo Moo Meadows", "Mushroom Gorge", "Toad's Factory", "Mario Circuit", "Coconut Mall", "DK Summit", "Wario's Gold Mine", "Daisy Circuit", "Koopa Cape", "Maple Treeway", "Grumble Volcano", "Dry Dry Ruins", "Moonview Highway", "Bowser's Castle", "Rainbow Road", "GCN Peach Beach", "DS Yoshi Falls", "SNES Ghost Valley 2", "N64 Mario Raceway", "N64 Sherbet Land", "GBA Shy Guy Beach", "DS Delfino Square", "GCN Waluigi Stadium", "DS Desert Hills", "GBA Bowser Castle 3", "N64 DK's Jungle Parkway", "GCN Mario Circuit", "SNES Mario Circuit 3", "DS Peach Gardens", "GCN DK Mountain", "N64 Bowser's Castle", "Block Plaza", "Delfino Pier", "Funky Stadium", "Chain Chomp Wheel", "Thwomp Desert", "SNES Battle Course 4", "GBA Battle Course 3", "N64 Skyscraper", "GCN Cookie Land", "DS Twilight House"];
 
 // destructively shorten track name, for use in image keys. should I just use the .szs file names and have a lookup table with some other useful info?\
 // idk I don't really feel like it rn lol
@@ -56,3 +49,9 @@ process.on("SIGINT", async () => {
 });
 
 rpc.loginRpc();
+
+const browser = await puppeteer.launch();
+const page = await browser.newPage();
+
+// default to my main mii's stats page
+await page.goto(`https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`);

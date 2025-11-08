@@ -1,0 +1,22 @@
+{
+	"INIT": {
+		"details": "Starting puppeteer",
+		"state": "Initializing...",
+		"startTimestamp": "{NOW}",
+		"largeImageKey": "large-image",
+		"largeImageText": "live dad reaction",
+		"smallImageKey": "small-image",
+		"smallImageText": "me 4 years ago",
+		"instance": false,
+		"buttons": [
+			{
+				"label": "butonn",
+				"url": "https://exmaple.com"
+			},
+			{
+				"label": "button",
+				"url": "https://example.com"
+			}
+		]
+	}
+}
