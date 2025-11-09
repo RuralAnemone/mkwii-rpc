@@ -2,24 +2,54 @@ import "dotenv/config";
 import process from "process";
 
 import { DiscordRPC } from "./discord.js";
-import { Wiimmfi } from "./wiimmfi.js"
-
+import { Wiimmfi } from "./wiimmfi.js";
 
 const rpc = new DiscordRPC();
 
-const trackNames = ["Luigi Circuit", "Moo Moo Meadows", "Mushroom Gorge", "Toad's Factory", "Mario Circuit", "Coconut Mall", "DK Summit", "Wario's Gold Mine", "Daisy Circuit", "Koopa Cape", "Maple Treeway", "Grumble Volcano", "Dry Dry Ruins", "Moonview Highway", "Bowser's Castle", "Rainbow Road", "GCN Peach Beach", "DS Yoshi Falls", "SNES Ghost Valley 2", "N64 Mario Raceway", "N64 Sherbet Land", "GBA Shy Guy Beach", "DS Delfino Square", "GCN Waluigi Stadium", "DS Desert Hills", "GBA Bowser Castle 3", "N64 DK's Jungle Parkway", "GCN Mario Circuit", "SNES Mario Circuit 3", "DS Peach Gardens", "GCN DK Mountain", "N64 Bowser's Castle", "Block Plaza", "Delfino Pier", "Funky Stadium", "Chain Chomp Wheel", "Thwomp Desert", "SNES Battle Course 4", "GBA Battle Course 3", "N64 Skyscraper", "GCN Cookie Land", "DS Twilight House"];
-
-// destructively shorten track name, for use in image keys. should I just use the .szs file names and have a lookup table with some other useful info?\
-// idk I don't really feel like it rn lol
-function shortenTrackName(name = "") {
-	// name = name.toLowerCase();
-	// name = name.replaceAll("'", "");
-	// name = name.replaceAll(" ", "-");
-
-	// return name;
-
-	return name.toLowerCase().replaceAll("'", "").replaceAll(" ", "-");
-}
+const trackNames = [
+	{ displayName: "Luigi Circuit", fileName: "beginner_course" },
+	{ displayName: "Moo Moo Meadows", fileName: "farm_course" },
+	{ displayName: "Mushroom Gorge", fileName: "kinoko_course" },
+	{ displayName: "Toad's Factory", fileName: "factory_course" },
+	{ displayName: "Mario Circuit", fileName: "castle_course" },
+	{ displayName: "Coconut Mall", fileName: "shopping_course" },
+	{ displayName: "DK Summit", fileName: "boardcross_course" },
+	{ displayName: "Wario's Gold Mine", fileName: "truck_course" },
+	{ displayName: "Daisy Circuit", fileName: "senior_course" },
+	{ displayName: "Koopa Cape", fileName: "water_course" },
+	{ displayName: "Maple Treeway", fileName: "treehouse_course" },
+	{ displayName: "Grumble Volcano", fileName: "volcano_course" },
+	{ displayName: "Dry Dry Ruins", fileName: "desert_course" },
+	{ displayName: "Moonview Highway", fileName: "ridgehighway_course" },
+	{ displayName: "Bowser's Castle", fileName: "koopa_course" },
+	{ displayName: "Rainbow Road", fileName: "rainbow_course" },
+	{ displayName: "GCN Peach Beach", fileName: "old_peach_gc" },
+	{ displayName: "DS Yoshi Falls", fileName: "old_falls_ds" },
+	{ displayName: "SNES Ghost Valley 2", fileName: "old_obake_sfc" },
+	{ displayName: "N64 Mario Raceway", fileName: "old_mario_64" },
+	{ displayName: "N64 Sherbet Land", fileName: "old_sherbet_64" },
+	{ displayName: "GBA Shy Guy Beach", fileName: "old_heyho_gba" },
+	{ displayName: "DS Delfino Square", fileName: "old_town_ds" },
+	{ displayName: "GCN Waluigi Stadium", fileName: "old_waluigi_gc" },
+	{ displayName: "DS Desert Hills", fileName: "old_desert_ds" },
+	{ displayName: "GBA Bowser Castle 3", fileName: "old_koopa_gba" },
+	{ displayName: "N64 DK's Jungle Parkway", fileName: "old_donkey_64" },
+	{ displayName: "GCN Mario Circuit", fileName: "old_mario_gc" },
+	{ displayName: "SNES Mario Circuit 3", fileName: "old_mario_sfc" },
+	{ displayName: "DS Peach Gardens", fileName: "old_garden_ds" },
+	{ displayName: "GCN DK Mountain", fileName: "old_donkey_gc" },
+	{ displayName: "N64 Bowser's Castle", fileName: "old_koopa_64" },
+	{ displayName: "Block Plaza", fileName: "block_battle" },
+	{ displayName: "Delfino Pier", fileName: "venice_battle" },
+	{ displayName: "Funky Stadium", fileName: "skate_battle" },
+	{ displayName: "Chain Chomp Wheel", fileName: "casino_battle" },
+	{ displayName: "Thwomp Desert", fileName: "sand_battle" },
+	{ displayName: "SNES Battle Course 4", fileName: "old_battle4_sfc" },
+	{ displayName: "GBA Battle Course 3", fileName: "old_battle3_gba" },
+	{ displayName: "N64 Skyscraper", fileName: "old_matenro_64" },
+	{ displayName: "GCN Cookie Land", fileName: "old_CookieLand_gc" },
+	{ displayName: "DS Twilight House", fileName: "old_House_ds" },
+];
 
 /* async function wait(ms) {
 	return new Promise((res, _rej) => {
@@ -55,31 +85,32 @@ process.on("SIGINT", async () => {
 	}
 });
 
-const wf = new Wiimmfi("next commit I swear");
+const wf = new Wiimmfi("U8.AkbyX7aWN7N9z7UqsfQCK1GosaS57xckbgR69sLw-1762585817-1.2.1.1-CNzKx.RmlugSOFSi.H_0_XRD5u_B7Ml16lNfOrLKhUllM8iyPatdJ99Ph_ZPHmOefDShsZVh5L4UrZs7ZahTnJvJnDaHrRPNWMr9P24buNsBa26KvusCPAwfE.3hqiOj.udVU4vG9LtD3XvImTJWR0_PXvcxJB.H62_u7ygDMVEoG.LpOhkArTHGJKG.VUa8zfx2g4D3cB_Fs6IKDTO_2tpugYuD2AP1qW9Oero9wwc");
 
 await wf.launch();
 
+const start = Date.now();
 setInterval(async () => {
 	rpc.setActivity({
-		"details": "poring over stats (updating every minute)",
-		"state": `there are ${await wf.getLiveRoomCount()} live rooms`,
-		"startTimestamp": Date.now(),
-		"largeImageKey": "large-image",
-		"largeImageText": "live dad reaction",
-		"smallImageKey": "small-image",
-		"smallImageText": "me 4 years ago",
-		"instance": false,
-		"buttons": [
+		details: "poring over stats (updating every minute)",
+		state: `there are ${await wf.getLiveRoomCount()} live rooms`,
+		startTimestamp: start,
+		largeImageKey: "large-image",
+		largeImageText: "live dad reaction",
+		smallImageKey: "small-image",
+		smallImageText: "me 4 years ago",
+		instance: false,
+		buttons: [
 			{
-				"label": "butonn",
-				"url": "https://exmaple.com"
+				label: "butonn",
+				url: "https://exmaple.com",
 			},
 			{
-				"label": "button",
-				"url": "https://example.com"
-			}
-		]
-	})
-}, 60e3)
+				label: "button",
+				url: "https://example.com",
+			},
+		],
+	});
+}, 60e3);
 
 rpc.loginRpc();
