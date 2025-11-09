@@ -72,6 +72,10 @@ export class Wiimmfi {
 	}
 
 	async getPlayerStats() {
+		await this.page.waitForNavigation({
+			waitUntil: "networkidle0"
+		})
+
 		// this will make it so much easier trust me
 		const PID = process.env["PID"];
 		await this.page.evaluate(PID => {
@@ -84,12 +88,13 @@ export class Wiimmfi {
 
 		this.username = await this.page.$eval("tr[rpc-tag='username'] > td > span.mii-font", e => e.innerText);
 
-		stateData = {
+		this.stateData = {
 			username: this.username,
-			
+
 		}
 
 		console.log(`Mii name: ${this.username}`);
+		console.log(new Date().toLocaleTimeString())
 
 		return this.username;
 	}

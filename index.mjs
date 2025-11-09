@@ -50,10 +50,10 @@ setInterval(async () => {
 		details: `logged in as ${await wf.getPlayerStats()}`,
 		state: `there are idk how many live rooms`,
 		startTimestamp: start,
-		largeImageKey: "large-image",
-		largeImageText: "live dad reaction",
-		smallImageKey: "small-image",
-		smallImageText: "me 4 years ago",
+		largeImageKey: "beginner_course",
+		largeImageText: "Luigi's Course",
+		smallImageKey: "https://patchy.moe/-/file/jwdRx",
+		smallImageText: "test mii",
 		instance: false,
 		buttons: [
 			{
