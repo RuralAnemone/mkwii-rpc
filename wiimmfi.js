@@ -3,7 +3,53 @@ import pkg from "puppeteer-extra-plugin-stealth";
 const stealthPlugin = pkg;
 
 export class Wiimmfi {
-	constructor(cookie) {
+	trackNames = [
+		{ displayName: "Luigi Circuit", fileName: "beginner_course" },
+		{ displayName: "Moo Moo Meadows", fileName: "farm_course" },
+		{ displayName: "Mushroom Gorge", fileName: "kinoko_course" },
+		{ displayName: "Toad's Factory", fileName: "factory_course" },
+		{ displayName: "Mario Circuit", fileName: "castle_course" },
+		{ displayName: "Coconut Mall", fileName: "shopping_course" },
+		{ displayName: "DK Summit", fileName: "boardcross_course" },
+		{ displayName: "Wario's Gold Mine", fileName: "truck_course" },
+		{ displayName: "Daisy Circuit", fileName: "senior_course" },
+		{ displayName: "Koopa Cape", fileName: "water_course" },
+		{ displayName: "Maple Treeway", fileName: "treehouse_course" },
+		{ displayName: "Grumble Volcano", fileName: "volcano_course" },
+		{ displayName: "Dry Dry Ruins", fileName: "desert_course" },
+		{ displayName: "Moonview Highway", fileName: "ridgehighway_course" },
+		{ displayName: "Bowser's Castle", fileName: "koopa_course" },
+		{ displayName: "Rainbow Road", fileName: "rainbow_course" },
+		{ displayName: "GCN Peach Beach", fileName: "old_peach_gc" },
+		{ displayName: "DS Yoshi Falls", fileName: "old_falls_ds" },
+		{ displayName: "SNES Ghost Valley 2", fileName: "old_obake_sfc" },
+		{ displayName: "N64 Mario Raceway", fileName: "old_mario_64" },
+		{ displayName: "N64 Sherbet Land", fileName: "old_sherbet_64" },
+		{ displayName: "GBA Shy Guy Beach", fileName: "old_heyho_gba" },
+		{ displayName: "DS Delfino Square", fileName: "old_town_ds" },
+		{ displayName: "GCN Waluigi Stadium", fileName: "old_waluigi_gc" },
+		{ displayName: "DS Desert Hills", fileName: "old_desert_ds" },
+		{ displayName: "GBA Bowser Castle 3", fileName: "old_koopa_gba" },
+		{ displayName: "N64 DK's Jungle Parkway", fileName: "old_donkey_64" },
+		{ displayName: "GCN Mario Circuit", fileName: "old_mario_gc" },
+		{ displayName: "SNES Mario Circuit 3", fileName: "old_mario_sfc" },
+		{ displayName: "DS Peach Gardens", fileName: "old_garden_ds" },
+		{ displayName: "GCN DK Mountain", fileName: "old_donkey_gc" },
+		{ displayName: "N64 Bowser's Castle", fileName: "old_koopa_64" },
+		{ displayName: "Block Plaza", fileName: "block_battle" },
+		{ displayName: "Delfino Pier", fileName: "venice_battle" },
+		{ displayName: "Funky Stadium", fileName: "skate_battle" },
+		{ displayName: "Chain Chomp Wheel", fileName: "casino_battle" },
+		{ displayName: "Thwomp Desert", fileName: "sand_battle" },
+		{ displayName: "SNES Battle Course 4", fileName: "old_battle4_sfc" },
+		{ displayName: "GBA Battle Course 3", fileName: "old_battle3_gba" },
+		{ displayName: "N64 Skyscraper", fileName: "old_matenro_64" },
+		{ displayName: "GCN Cookie Land", fileName: "old_CookieLand_gc" },
+		{ displayName: "DS Twilight House", fileName: "old_House_ds" },
+	];
+
+	constructor(userAgent, cookie) {
+		this.USERAGENT = userAgent;
 		this.CF_COOKIE = cookie;
 	}
 
@@ -12,7 +58,7 @@ export class Wiimmfi {
 		this.browser = await puppeteer.launch({ headless: false });
 		this.page = await this.browser.newPage();
 		await this.page.setUserAgent({
-			userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+			userAgent: this.USERAGENT,
 		});
 
 		this.browser.setCookie({
@@ -23,6 +69,29 @@ export class Wiimmfi {
 
 		// default to my main mii's stats page
 		await this.page.goto(`https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`);
+	}
+
+	async getPlayerStats() {
+		// this will make it so much easier trust me
+		const PID = process.env["PID"];
+		await this.page.evaluate(PID => {
+			console.log(PID)
+			document.querySelector(`td[data-tooltip='pid=${PID}']`).parentElement.setAttribute("rpc-tag", "username");
+			return null
+		}, PID).catch(error => console.log("bruh", error, error.stack));
+
+		// return "bruh"
+
+		this.username = await this.page.$eval("tr[rpc-tag='username'] > td > span.mii-font", e => e.innerText);
+
+		stateData = {
+			username: this.username,
+			
+		}
+
+		console.log(`Mii name: ${this.username}`);
+
+		return this.username;
 	}
 
 	async getLiveRoomCount() {
