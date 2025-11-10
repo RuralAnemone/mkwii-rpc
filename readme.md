@@ -6,8 +6,11 @@ initial RPC script scaffolding from https://github.com/ThunderDoesDev/Custom-RPC
 
 ## *planned* features:
 
-- optional `mkw-ana` enhancements (ENSURE PLATFORM INDIFFERENCE) i.e. showing your Mii, smaller ratelimit maybe idk I think discord rpc is still ratelimited at 0.2Hz
-- basically just going off dotcomboom for now
+- [ ] optional `mkw-ana` enhancements (ENSURE PLATFORM INDIFFERENCE) i.e. showing your Mii, smaller ratelimit maybe idk I think discord rpc is still ratelimited at 0.2Hz
+
+- [ ] GUI
+
+- [ ] custom layouts (see `states.json`)
 
 ## how this works
 
@@ -31,14 +34,20 @@ this script <!--does--> will do <!--don't convert the rest to infinitive or futu
 
 ## how to use
 
-- clone the repo
-- install deps
+1. clone the repo
+
+2. install deps
 
 ```sh
 npm i
 ```
 
-- run index.mjs
+3. configure environment vairables
+  - copy `.env.example` to `.env` and fill out the values.
+    - see the file comments if you need help
+
+
+4. run index.mjs
 
 ```sh
 node index.mjs
