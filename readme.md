@@ -36,6 +36,11 @@ this script <!--does--> will do <!--don't convert the rest to infinitive or futu
 
 1. clone the repo
 
+```sh
+git clone https://codeberg.org/RuralAnemone/mkwii-rpc
+cd mkwii-rpc
+```
+
 2. install deps
 
 ```sh
