@@ -1,5 +1,8 @@
 import puppeteer from "puppeteer-extra";
 import pkg from "puppeteer-extra-plugin-stealth";
+
+import states from "./states.json" with { type: "json" };
+
 const stealthPlugin = pkg;
 
 export class Wiimmfi {
@@ -48,9 +51,16 @@ export class Wiimmfi {
 		{ displayName: "DS Twilight House", fileName: "old_House_ds" },
 	];
 
+	currentState = {};
+
+	watchUrl = `https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`;
+
 	constructor(userAgent, cookie) {
 		this.USERAGENT = userAgent;
 		this.CF_COOKIE = cookie;
+
+		// just track how long you've been playing for, that seems the most reasonable for now
+		this.start = Date.now();
 	}
 
 	async launch() {
@@ -74,14 +84,60 @@ export class Wiimmfi {
 		});
 
 		// default to my main mii's stats page
-		await this.page.goto(`https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`);
+		await this.page.goto(this.watchUrl);
+	}
+
+	fillTemplateState(stateName) {
+		const translations = {
+			"NOW": this.start,
+			"USERNAME": this.username,
+			"VR": this.vr,
+			"CURRENT TRACK DISPLAY NAME": this.currentTrack?.displayName,
+			"CURRENT TRACK FILE NAME": this.currentTrack?.fileName,
+			"PLAYER COUNT": this.playerCount
+		}
+
+		// pass object by value, assuming it uses primitives (:
+		// see https://stackoverflow.com/a/24273055/17834675
+		this.currentState = JSON.parse(JSON.stringify(states[stateName]));
+
+		// need a local copy of states object (hence modifiedStates), use imported as reference
+		const recurseFill = obj => {
+			for (const key of Object.keys(obj)) {
+				if (typeof obj[key] === "object" && obj[key] !== null) {
+					recurseFill(obj[key]);
+				}
+
+				// get {stuff in braces} but chop the {} off
+				typeof obj[key] === "string" && obj[key].match(/({.+?})+/g)?.map(e=>e.slice(1,-1))
+				.forEach(placeholder => {
+					// additional check to preserve primitives; if replacing the entire obj[key], pass value instead of string.replace
+					if (obj[key] === "{" + placeholder + "}") {
+						obj[key] = translations[placeholder];
+					} else {
+						obj[key] = obj[key].replaceAll(`{${placeholder}}`, translations[placeholder]);
+					}
+				});
+
+			}
+		}
+
+		recurseFill(this.currentState);
+
+		return this.currentState;
 	}
 
 	async getPlayerStats() {
-		if (this.page.url() !== "https:/")
-			await this.page.waitForNavigation({
-				waitUntil: "networkidle0",
-			});
+		if (await this.page.$(".warn") && await this.page.$eval(".warn", e => e.innerText === "No room found!")) {
+			console.log("not in game");
+			return this.fillTemplateState("NOT_IN_GAME");
+		}
+
+		if (this.page.url() !== this.watchUrl) await this.page.goto(this.watchUrl);
+
+		await this.page.waitForNavigation({
+			waitUntil: "networkidle0",
+		});
 
 		// this will make it so much easier trust me
 		const PID = process.env["PID"];
@@ -115,12 +171,7 @@ export class Wiimmfi {
 		console.log(`Mii name: ${this.username}`);
 		console.log(new Date().toLocaleTimeString());
 
-		return {
-			username: this.username,
-			playerCount: this.playerCount,
-			currentTrack: this.currentTrack,
-			vr: this.vr,
-		};
+		return this.fillTemplateState("IN_GAME");
 	}
 
 	async getLiveRoomCount() {

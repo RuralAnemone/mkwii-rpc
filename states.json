@@ -18,5 +18,33 @@
 				"url": "https://example.com"
 			}
 		]
+	},
+	"IN_GAME": {
+		"details": "logged in as {USERNAME} ({VR}VR)",
+		"state": "playing {CURRENT TRACK DISPLAY NAME}",
+		"startTimestamp": "{NOW}",
+		"largeImageKey": "{CURRENT TRACK FILE NAME}",
+		"largeImageText": "{CURRENT TRACK DISPLAY NAME}",
+		"smallImageKey": "https://patchy.moe/-/file/jwdRx",
+		"smallImageText": "test mii",
+		"instance": false,
+		"buttons": [
+			{
+				"label": "butonn",
+				"url": "https://exmaple.com"
+			},
+			{
+				"label": "button",
+				"url": "https://example.com"
+			}
+		],
+		"playerMax": 12,
+		"playerSize": "{PLAYER COUNT}"
+	},
+	"NOT_IN_GAME": {
+		"details": "not online",
+		"largeImageKey": "large-image",
+		"largeImageText":"live dad reaction",
+		"startTimestamp": "{NOW}"
 	}
 }

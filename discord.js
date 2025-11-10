@@ -11,14 +11,14 @@ class DiscordRPC {
 		this.client = new Client({
 			transport: "ipc",
 		});
-		states.INIT.startTimestamp = Date.now();
-		this.activity = states.INIT;
+		// states.INIT.startTimestamp = Date.now();
+		// this.activity = states.INIT;
 	}
 
 	async loginRpc() {
 		console.log("logging in");
 		try {
-			this.client.login({
+			await this.client.login({
 				clientId: this.CLIENT_ID,
 			});
 			console.log("logged in");
@@ -28,9 +28,9 @@ class DiscordRPC {
 		}
 	}
 
-	setActivity(activity = this.activity) {
+	async setActivity(activity) {
 		try {
-			this.client.setActivity(activity);
+			await this.client.setActivity(activity);
 			console.log("RPC set!");
 		} catch (error) {
 			console.error(`Failed to start RPC.`);

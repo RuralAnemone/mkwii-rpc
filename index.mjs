@@ -17,9 +17,11 @@ const rpc = new DiscordRPC();
 	rpc.setActivity(newPresence);
 } */
 
-rpc.client.on("ready", () => {
+rpc.client.on("ready", async () => {
 	console.log("Connected!");
-	rpc.setActivity();
+	setInterval(async () => {
+		await rpc.setActivity(await wf.getPlayerStats());
+	}, 6e3);
 });
 
 // C-c break or whatever (or gui whenever I get there)
@@ -45,30 +47,5 @@ const wf = new Wiimmfi(process.env["USERAGENT"], process.env["CF_CLEARANCE"]);
 await wf.launch();
 
 const start = Date.now();
-setInterval(async () => {
-	const stats = await wf.getPlayerStats();
-	rpc.setActivity({
-		details: `logged in as ${stats.username} (${stats.vr}VR)`,
-		state: `playing ${stats.currentTrack.displayName}`,
-		startTimestamp: start,
-		largeImageKey: stats.currentTrack.fileName,
-		largeImageText: stats.currentTrack.displayName,
-		smallImageKey: "https://patchy.moe/-/file/jwdRx",
-		smallImageText: "test mii",
-		instance: false,
-		buttons: [
-			{
-				label: "butonn",
-				url: "https://exmaple.com",
-			},
-			{
-				label: "button",
-				url: "https://example.com",
-			},
-		],
-		playerMax: 12,
-		playerSize: stats.playerCount,
-	});
-}, 10e3);
 
 rpc.loginRpc();
