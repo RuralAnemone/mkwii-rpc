@@ -1,6 +1,6 @@
 {
   "name": "mkwii-rpc",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "a Discord Rich Presence (RPC) app that shows your Mario Kart Wii on Wiimmfi status. eventually will be customizable. deps: blessed, discord-rich-presence, puppeteer.",
   "keywords": [
     "discord-rpc",
