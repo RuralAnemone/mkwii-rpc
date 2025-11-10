@@ -50,6 +50,12 @@ or just run the start script if you have muscle memory
 npm start
 ```
 
+## using your own client
+
+1. set `CLIENT_ID` in `.env`
+2. download [`assets/export.tar.gz`](https://codeberg.org/RuralAnemone/mkwii-rpc/raw/branch/main/assets/export.tar.gz). upload everything into ( Discord Developers > Rich Presence > Art Assets ) — you may get ratelimited, so try uploading a couple files at a time
+3. set your imgur api key wherever once I implement miis in mkw-ana
+
 ---
 
 ###### *this program was brought to you by the human brain. no LLMs were used in the making of this program*
