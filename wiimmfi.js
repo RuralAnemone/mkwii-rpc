@@ -89,7 +89,7 @@ export class Wiimmfi {
 
 	fillTemplateState(stateName) {
 		const translations = {
-			"NOW": this.start,
+			"START": this.start,
 			"USERNAME": this.username,
 			"VR": this.vr,
 			"CURRENT TRACK DISPLAY NAME": this.currentTrack?.displayName,
@@ -133,11 +133,11 @@ export class Wiimmfi {
 			return this.fillTemplateState("NOT_IN_GAME");
 		}
 
-		if (this.page.url() !== this.watchUrl) await this.page.goto(this.watchUrl);
+		/* if (this.page.url() !== this.watchUrl) */ await this.page.goto(this.watchUrl);
 
-		await this.page.waitForNavigation({
+		/* await this.page.waitForNavigation({
 			waitUntil: "networkidle0",
-		});
+		}); */
 
 		// this will make it so much easier trust me
 		const PID = process.env["PID"];
@@ -157,7 +157,18 @@ export class Wiimmfi {
 
 		// haha magic selector! let's hope the page layout doesn't change AT ALL 🤪
 		// regex matches "track name (track author)" as "group1 (group 2)"
-		let trackMatches = (await this.page.$eval("th > p > a", e => e.innerText)).match(/W?i?i? ?(.+) (\(.+\))/);
+		const trackUrlSelector = "th > p > a";
+
+		if (await this.page.$(trackUrlSelector) === null) {
+			this.currentTrack = {
+				displayName: "Nothing",
+				author: "Nobody",
+				filename: "not_found"
+			}
+			return this.fillTemplateState("IDLE");
+		}
+
+		let trackMatches = (await this.page.$eval(trackUrlSelector, e => e.innerText)).match(/W?i?i? ?(.+) (\(.+\))/);
 
 		let currentTrackName = trackMatches[1];
 		console.log(`playing ${currentTrackName}`);

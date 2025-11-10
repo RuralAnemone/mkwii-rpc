@@ -2,49 +2,35 @@
 	"INIT": {
 		"details": "Starting puppeteer",
 		"state": "Initializing...",
-		"startTimestamp": "{NOW}",
+		"startTimestamp": "{START}",
 		"largeImageKey": "large-image",
 		"largeImageText": "live dad reaction",
 		"smallImageKey": "small-image",
-		"smallImageText": "me 4 years ago",
-		"instance": false,
-		"buttons": [
-			{
-				"label": "butonn",
-				"url": "https://exmaple.com"
-			},
-			{
-				"label": "button",
-				"url": "https://example.com"
-			}
-		]
+		"smallImageText": "?????????",
+		"instance": false
 	},
 	"IN_GAME": {
 		"details": "logged in as {USERNAME} ({VR}VR)",
 		"state": "playing {CURRENT TRACK DISPLAY NAME}",
-		"startTimestamp": "{NOW}",
+		"startTimestamp": "{START}",
 		"largeImageKey": "{CURRENT TRACK FILE NAME}",
 		"largeImageText": "{CURRENT TRACK DISPLAY NAME}",
 		"smallImageKey": "https://patchy.moe/-/file/jwdRx",
 		"smallImageText": "test mii",
 		"instance": false,
-		"buttons": [
-			{
-				"label": "butonn",
-				"url": "https://exmaple.com"
-			},
-			{
-				"label": "button",
-				"url": "https://example.com"
-			}
-		],
-		"playerMax": 12,
-		"playerSize": "{PLAYER COUNT}"
+		"playerSize": "{PLAYER COUNT}",
+		"playerMax": 12
 	},
 	"NOT_IN_GAME": {
 		"details": "not online",
 		"largeImageKey": "large-image",
 		"largeImageText":"live dad reaction",
-		"startTimestamp": "{NOW}"
+		"startTimestamp": "{START}"
+	},
+	"IDLE": {
+		"details": "not in a race",
+		"largeImageKey": "not_found",
+		"largeImageText": "there's no track image bruh",
+		"startTimestamp": "{START}"
 	}
 }

@@ -12,16 +12,13 @@ const rpc = new DiscordRPC();
 	});
 } */
 
-/* function updatePresence(newPresence) {
-	// maybe do some other stuff?
-	rpc.setActivity(newPresence);
-} */
-
 rpc.client.on("ready", async () => {
 	console.log("Connected!");
+	await rpc.setActivity(await wf.getPlayerStats());
 	setInterval(async () => {
 		await rpc.setActivity(await wf.getPlayerStats());
-	}, 6e3);
+	}, 9e3);
+	// 9e3 ∵ allowing for a bit of wiggle room within the 10-second window
 });
 
 // C-c break or whatever (or gui whenever I get there)
@@ -45,7 +42,5 @@ process.on("SIGINT", async () => {
 const wf = new Wiimmfi(process.env["USERAGENT"], process.env["CF_CLEARANCE"]);
 
 await wf.launch();
-
-const start = Date.now();
 
 rpc.loginRpc();

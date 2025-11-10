@@ -42,7 +42,7 @@ this script <!--does--> will do <!--don't convert the rest to infinitive or futu
 npm i
 ```
 
-3. configure environment vairables
+3. configure environment variables
   - copy `.env.example` to `.env` and fill out the values.
     - see the file comments if you need help
 
