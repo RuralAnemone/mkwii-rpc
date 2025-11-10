@@ -79,18 +79,19 @@ export class Wiimmfi {
 
 	async getPlayerStats() {
 		if (this.page.url() !== "https:/")
-
-		await this.page.waitForNavigation({
-			waitUntil: "networkidle0"
-		})
+			await this.page.waitForNavigation({
+				waitUntil: "networkidle0",
+			});
 
 		// this will make it so much easier trust me
 		const PID = process.env["PID"];
-		await this.page.evaluate(PID => {
-			console.log(PID)
-			document.querySelector(`td[data-tooltip='pid=${PID}']`).parentElement.setAttribute("rpc-tag", "username");
-			return null
-		}, PID).catch(error => console.log("bruh", error, error.stack));
+		await this.page
+			.evaluate(PID => {
+				console.log(PID);
+				document.querySelector(`td[data-tooltip='pid=${PID}']`).parentElement.setAttribute("rpc-tag", "username");
+				return null;
+			}, PID)
+			.catch(error => console.log("bruh", error, error.stack));
 
 		// return "bruh"
 
@@ -103,29 +104,29 @@ export class Wiimmfi {
 		let trackMatches = (await this.page.$eval("th > p > a", e => e.innerText)).match(/W?i?i? ?(.+) (\(.+\))/);
 
 		let currentTrackName = trackMatches[1];
-		console.log(`playing ${currentTrackName}`)
+		console.log(`playing ${currentTrackName}`);
 
 		this.currentTrack = {
 			displayName: currentTrackName,
 			author: trackMatches[2],
-			fileName: this.trackNames.find(obj => obj.displayName === currentTrackName).fileName
-		}
+			fileName: this.trackNames.find(obj => obj.displayName === currentTrackName).fileName,
+		};
 
 		console.log(`Mii name: ${this.username}`);
-		console.log(new Date().toLocaleTimeString())
+		console.log(new Date().toLocaleTimeString());
 
 		return {
 			username: this.username,
 			playerCount: this.playerCount,
 			currentTrack: this.currentTrack,
-			vr: this.vr
+			vr: this.vr,
 		};
 	}
 
 	async getLiveRoomCount() {
 		await this.page.goto("https://wiimmfi.de/stats/mkw");
 
-		this.roomCount = (await this.page.$$(".tc")).length
+		this.roomCount = (await this.page.$$(".tc")).length;
 
 		console.log(this.roomCount + " online rooms");
 		return this.roomCount;

@@ -67,7 +67,7 @@ setInterval(async () => {
 			},
 		],
 		playerMax: 12,
-		playerSize: stats.playerCount
+		playerSize: stats.playerCount,
 	});
 }, 10e3);
 
