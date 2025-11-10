@@ -34,6 +34,10 @@ this script <!--does--> will do <!--don't convert the rest to infinitive or futu
 
 ## how to use
 
+0. install nodejs if you haven't already
+
+- go to <https://nodejs.org/en/download> and download the prebuilt release for your OS.
+
 1. clone the repo
 
 ```sh
