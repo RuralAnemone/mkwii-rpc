@@ -57,6 +57,12 @@ export class Wiimmfi {
 		puppeteer.use(stealthPlugin);
 		this.browser = await puppeteer.launch({ headless: false });
 		this.page = await this.browser.newPage();
+
+		this.page.setViewport({
+			width: 1280,
+			height: 720,
+		});
+
 		await this.page.setUserAgent({
 			userAgent: this.USERAGENT,
 		});
@@ -72,6 +78,8 @@ export class Wiimmfi {
 	}
 
 	async getPlayerStats() {
+		if (this.page.url() !== "https:/")
+
 		await this.page.waitForNavigation({
 			waitUntil: "networkidle0"
 		})
@@ -87,16 +95,31 @@ export class Wiimmfi {
 		// return "bruh"
 
 		this.username = await this.page.$eval("tr[rpc-tag='username'] > td > span.mii-font", e => e.innerText);
+		this.playerCount = (await this.page.$$("span.mii-font")).length;
+		this.vr = await this.page.$eval("tr[rpc-tag='username'] > td:nth-child(7)", e => e.innerText);
 
-		this.stateData = {
-			username: this.username,
+		// haha magic selector! let's hope the page layout doesn't change AT ALL 🤪
+		// regex matches "track name (track author)" as "group1 (group 2)"
+		let trackMatches = (await this.page.$eval("th > p > a", e => e.innerText)).match(/W?i?i? ?(.+) (\(.+\))/);
 
+		let currentTrackName = trackMatches[1];
+		console.log(`playing ${currentTrackName}`)
+
+		this.currentTrack = {
+			displayName: currentTrackName,
+			author: trackMatches[2],
+			fileName: this.trackNames.find(obj => obj.displayName === currentTrackName).fileName
 		}
 
 		console.log(`Mii name: ${this.username}`);
 		console.log(new Date().toLocaleTimeString())
 
-		return this.username;
+		return {
+			username: this.username,
+			playerCount: this.playerCount,
+			currentTrack: this.currentTrack,
+			vr: this.vr
+		};
 	}
 
 	async getLiveRoomCount() {

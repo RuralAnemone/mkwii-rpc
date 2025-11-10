@@ -46,12 +46,13 @@ await wf.launch();
 
 const start = Date.now();
 setInterval(async () => {
+	const stats = await wf.getPlayerStats();
 	rpc.setActivity({
-		details: `logged in as ${await wf.getPlayerStats()}`,
-		state: `there are idk how many live rooms`,
+		details: `logged in as ${stats.username} (${stats.vr}VR)`,
+		state: `playing ${stats.currentTrack.displayName}`,
 		startTimestamp: start,
-		largeImageKey: "beginner_course",
-		largeImageText: "Luigi's Course",
+		largeImageKey: stats.currentTrack.fileName,
+		largeImageText: stats.currentTrack.displayName,
 		smallImageKey: "https://patchy.moe/-/file/jwdRx",
 		smallImageText: "test mii",
 		instance: false,
@@ -65,7 +66,9 @@ setInterval(async () => {
 				url: "https://example.com",
 			},
 		],
+		playerMax: 12,
+		playerSize: stats.playerCount
 	});
-}, 5e3);
+}, 10e3);
 
 rpc.loginRpc();
