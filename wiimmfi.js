@@ -128,12 +128,12 @@ export class Wiimmfi {
 	}
 
 	async getPlayerStats() {
+		/* if (this.page.url() !== this.watchUrl) */ await this.page.goto(this.watchUrl);
+
 		if (await this.page.$(".warn") && await this.page.$eval(".warn", e => e.innerText === "No room found!")) {
 			console.log("not in game");
 			return this.fillTemplateState("NOT_IN_GAME");
 		}
-
-		/* if (this.page.url() !== this.watchUrl) */ await this.page.goto(this.watchUrl);
 
 		/* await this.page.waitForNavigation({
 			waitUntil: "networkidle0",
