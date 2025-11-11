@@ -53,6 +53,7 @@ export class Wiimmfi {
 
 	currentState = {};
 
+	// default to my main mii's stats page
 	watchUrl = `https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`;
 
 	constructor(userAgent, cookie) {
@@ -64,7 +65,7 @@ export class Wiimmfi {
 	}
 
 	async launch() {
-		puppeteer.use(stealthPlugin);
+		puppeteer.use(stealthPlugin());
 		this.browser = await puppeteer.launch({ headless: false });
 		this.page = await this.browser.newPage();
 
@@ -83,8 +84,10 @@ export class Wiimmfi {
 			domain: "wiimmfi.de",
 		});
 
-		// default to my main mii's stats page
 		await this.page.goto(this.watchUrl);
+
+		// just in case the captcha is incredibly silly
+		await this.page.waitForSelector(".nb-fixed#navbar");
 	}
 
 	fillTemplateState(stateName) {
