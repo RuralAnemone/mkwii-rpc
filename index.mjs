@@ -6,7 +6,7 @@ import { Logger } from "./logger.js";
 import { Wiimmfi } from "./wiimmfi.js";
 
 const rpc = new DiscordRPC();
-const logger = new Logger("MKWii RPC", process.env["VERBOSITY"]);
+const logger = new Logger("MKW RPC", process.env["VERBOSITY"]);
 logger.showHeader();
 
 /* async function wait(ms) {
