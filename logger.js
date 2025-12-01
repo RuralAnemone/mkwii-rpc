@@ -50,7 +50,7 @@ export class Logger {
 			hours: timePad(now.getHours()),
 			minutes: timePad(now.getMinutes()),
 			seconds: timePad(now.getSeconds()),
-			milliseconds: now.getMilliseconds().padEnd(3, "0")
+			milliseconds: now.getMilliseconds().toString().padEnd(3, "0")
 		}
 
 		// "ah yes let's have only one implementation of ISO8601, nobody's ever going to use any other format specified in the international standard."

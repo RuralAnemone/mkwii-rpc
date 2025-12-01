@@ -27,6 +27,7 @@ rpc.client.on("ready", async () => {
 
 // C-c break or whatever (or gui whenever I get there)
 process.on("SIGINT", async () => {
+	console.log() // offset ^C in console
 	logger.info("attempting to shut down gracefully (emergency exit in 5 seconds)");
 	try {
 		setTimeout(() => {
