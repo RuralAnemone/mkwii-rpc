@@ -7,7 +7,7 @@ import { Wiimmfi } from "./wiimmfi.js";
 
 const rpc = new DiscordRPC();
 const logger = new Logger("MKWii RPC", process.env["VERBOSE_LOGS"]);
-logger.init();
+logger.showHeader();
 
 /* async function wait(ms) {
 	return new Promise((res, _rej) => {

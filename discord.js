@@ -1,12 +1,11 @@
 import { Client } from "discord-rpc";
 import "dotenv/config";
 
-import { Logger } from "./logger";
+import { Logger } from "./logger.js";
 
 import states from "./states.json" with { type: "json" };
 
 const logger = new Logger("Discord", process.env["VERBOSE_LOGS"]);
-logger.init();
 
 class DiscordRPC {
 	CLIENT_ID = process.env.CLIENT_ID ?? "1432098284922736740";

@@ -38,6 +38,7 @@ export class Logger {
 	 * @param {"INFO"|"WARN"|"ERROR"|String} severity severity level of log. defaults to "INFO"
 	 */
 	#log(text, severity = "INFO") {
+		const severityRanking = ["INFO", "WARN", "ERROR"];
 		const now = new Date();
 
 		const timePad = time => time.toString().padStart(2, "0");

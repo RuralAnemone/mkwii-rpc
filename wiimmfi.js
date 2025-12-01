@@ -3,12 +3,11 @@ import pkg from "puppeteer-extra-plugin-stealth";
 // very silly workaround
 const stealthPlugin = pkg;
 
-import { Logger } from "./logger";
+import { Logger } from "./logger.js";
 
 import states from "./states.json" with { type: "json" };
 
 const logger = new Logger("Wiimmfi", process.env["VERBOSE_LOGS"]);
-logger.init();
 
 export class Wiimmfi {
 	trackNames = [
