@@ -6,6 +6,8 @@ initial RPC script scaffolding from https://github.com/ThunderDoesDev/Custom-RPC
 
 ## *planned* features:
 
+- [x] better logs
+
 - [ ] optional `mkw-ana` enhancements (ENSURE PLATFORM INDIFFERENCE) i.e. showing your Mii, smaller ratelimit maybe idk I think discord rpc is still ratelimited at 0.2Hz
 
 - [ ] GUI
