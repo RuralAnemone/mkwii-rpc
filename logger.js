@@ -86,25 +86,31 @@ export class Logger {
 
 	/**
 	 * Log to the console with INFO level severity.
-	 * @param {String} text Text to log.
+	 * @param {String} texts Text(s) to log.
 	 */
-	info(text) {
-		this.#log(text, "INFO");
+	info(...texts) {
+		for (const text of texts) {
+			this.#log(text, "INFO");
+		}
 	}
 
 	/**
 	 * Log to the console with WARN level severity.
-	 * @param {String} text Text to log.
+	 * @param {String} texts Text(s) to log.
 	 */
-	warn(text) {
-		this.#log(text, "WARN");
+	warn(...texts) {
+		for (const text of texts) {
+			this.#log(text, "WARN");
+		}
 	}
 
 	/**
 	 * Log to the console with ERROR level severity.
-	 * @param {String} text Text to log.
+	 * @param {String} texts Text(s) to log.
 	 */
-	error(text) {
-		this.#log(text, "ERROR");
+	error(...texts) {
+		for (const text of texts) {
+			this.#log(text, "ERROR");
+		}
 	}
 }
