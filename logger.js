@@ -55,7 +55,7 @@ export class Logger {
 
 		// "ah yes let's have only one implementation of ISO8601, nobody's ever going to use any other format specified in the international standard."
 		// – ECMA
-		const timestamp = `${now.getFullYear()}-${padded.month}-${padded.date} ${padded.hours}:${padded.minutes}:${padded.seconds}.${now.getMilliseconds()}`;
+		const timestamp = `${now.getFullYear()}-${padded.month}-${padded.date} ${padded.hours}:${padded.minutes}:${padded.seconds}.${padded.milliseconds}`;
 
 		let severityText = "";
 
