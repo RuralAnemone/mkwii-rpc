@@ -70,7 +70,7 @@ export class Wiimmfi {
 
 	async launch() {
 		puppeteer.use(stealthPlugin());
-		this.browser = await puppeteer.launch({ headless: false });
+		this.browser = await puppeteer.launch({ headless: process.env["HEADLESS_BROWSER"] });
 		this.page = await this.browser.newPage();
 
 		this.page.setViewport({
