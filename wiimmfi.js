@@ -70,7 +70,10 @@ export class Wiimmfi {
 
 	async launch() {
 		puppeteer.use(stealthPlugin());
-		this.browser = await puppeteer.launch({ headless: process.env["HEADLESS_BROWSER"] });
+
+		let headlessnessOfBrowser = process.env["HEADLESS_BROWSER"] !== "false"
+
+		this.browser = await puppeteer.launch({ headless: headlessnessOfBrowser });
 		this.page = await this.browser.newPage();
 
 		this.page.setViewport({
@@ -150,7 +153,6 @@ export class Wiimmfi {
 		const PID = process.env["PID"];
 		await this.page
 			.evaluate(PID => {
-				logger.info(PID);
 				document.querySelector(`td[data-tooltip='pid=${PID}']`).parentElement.setAttribute("rpc-tag", "username");
 				return null;
 			}, PID)
