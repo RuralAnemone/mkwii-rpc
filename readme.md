@@ -57,6 +57,10 @@ npm i
   - copy `.env.example` to `.env` and fill out the values.
     - see the file comments if you need help
 
+```sh
+cp .env.example .env && $EDITOR .env
+```
+
 
 4. run index.mjs
 
