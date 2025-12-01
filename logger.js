@@ -2,6 +2,7 @@ import chalk from "chalk";
 
 export class Logger {
 	// "MKWII RPC" in ANSI block characters with drop shadow and double-stroke border
+	// in case you were unaware
 	headerText =`╔═══════════════════════════════════════════════════════════════════╗
 ║                                                                   ║
 ║  ███╗   ███╗██╗  ██╗██╗    ██╗██╗██╗    ██████╗ ██████╗  ██████╗  ║
