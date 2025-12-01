@@ -1,7 +1,12 @@
 import { Client } from "discord-rpc";
 import "dotenv/config";
 
+import { Logger } from "./logger";
+
 import states from "./states.json" with { type: "json" };
+
+const logger = new Logger("Discord", process.env["VERBOSE_LOGS"]);
+logger.init();
 
 class DiscordRPC {
 	CLIENT_ID = process.env.CLIENT_ID ?? "1432098284922736740";
@@ -20,25 +25,25 @@ class DiscordRPC {
 	}
 
 	async loginRpc() {
-		console.log("logging in");
+		logger.info("logging in...");
 		try {
 			await this.client.login({
 				clientId: this.CLIENT_ID,
 			});
-			console.log("logged in");
+			logger.info("logged in!");
 		} catch (error) {
-			console.error(`uh oh! couldn't log in ):`);
-			console.error(error, error.stack);
+			logger.warn(`uh oh! couldn't log in ):`);
+			logger.error(error, error.stack);
 		}
 	}
 
 	async setActivity(activity) {
 		try {
 			await this.client.setActivity(activity);
-			console.log(`${new Date().toLocaleString()}: RPC set!`);
+			logger.info("RPC set!");
 		} catch (error) {
-			console.error(`Failed to start RPC.`);
-			console.error(error, error.stack);
+			logger.warn(`Failed to start RPC.`);
+			logger.error(error, error.stack);
 		}
 	}
 }

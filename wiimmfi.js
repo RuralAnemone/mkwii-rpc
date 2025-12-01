@@ -1,9 +1,14 @@
 import puppeteer from "puppeteer-extra";
 import pkg from "puppeteer-extra-plugin-stealth";
+// very silly workaround
+const stealthPlugin = pkg;
+
+import { Logger } from "./logger";
 
 import states from "./states.json" with { type: "json" };
 
-const stealthPlugin = pkg;
+const logger = new Logger("Wiimmfi", process.env["VERBOSE_LOGS"]);
+logger.init();
 
 export class Wiimmfi {
 	trackNames = [
@@ -134,7 +139,7 @@ export class Wiimmfi {
 		/* if (this.page.url() !== this.watchUrl) */ await this.page.goto(this.watchUrl);
 
 		if (await this.page.$(".warn") && await this.page.$eval(".warn", e => e.innerText === "No room found!")) {
-			console.log("not in game");
+			logger.info("not in game");
 			return this.fillTemplateState("NOT_IN_GAME");
 		}
 
@@ -146,11 +151,14 @@ export class Wiimmfi {
 		const PID = process.env["PID"];
 		await this.page
 			.evaluate(PID => {
-				console.log(PID);
+				logger.info(PID);
 				document.querySelector(`td[data-tooltip='pid=${PID}']`).parentElement.setAttribute("rpc-tag", "username");
 				return null;
 			}, PID)
-			.catch(error => console.log("bruh", error, error.stack));
+			.catch(error => {
+				logger.warn("bruh");
+				logger.error(error, error.stack);
+			});
 
 		// return "bruh"
 
@@ -174,7 +182,7 @@ export class Wiimmfi {
 		let trackMatches = (await this.page.$eval(trackUrlSelector, e => e.innerText)).match(/W?i?i? ?(.+) (\(.+\))/);
 
 		let currentTrackName = trackMatches[1];
-		console.log(`playing ${currentTrackName}`);
+		logger.info(`playing ${currentTrackName}`);
 
 		this.currentTrack = {
 			displayName: currentTrackName,
@@ -182,8 +190,7 @@ export class Wiimmfi {
 			fileName: this.trackNames.find(obj => obj.displayName === currentTrackName).fileName,
 		};
 
-		console.log(`Mii name: ${this.username}`);
-		console.log(new Date().toLocaleTimeString());
+		logger.info(`Mii name: ${this.username}`);
 
 		return this.fillTemplateState("IN_GAME");
 	}
@@ -193,7 +200,7 @@ export class Wiimmfi {
 
 		this.roomCount = (await this.page.$$(".tc")).length;
 
-		console.log(this.roomCount + " online rooms");
+		logger.info(`${this.roomCount} online rooms`);
 		return this.roomCount;
 	}
 }

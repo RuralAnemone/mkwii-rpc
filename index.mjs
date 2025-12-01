@@ -2,9 +2,12 @@ import "dotenv/config";
 import process from "process";
 
 import { DiscordRPC } from "./discord.js";
+import { Logger } from "./logger.js";
 import { Wiimmfi } from "./wiimmfi.js";
 
 const rpc = new DiscordRPC();
+const logger = new Logger("MKWii RPC", process.env["VERBOSE_LOGS"]);
+logger.init();
 
 /* async function wait(ms) {
 	return new Promise((res, _rej) => {
@@ -12,8 +15,9 @@ const rpc = new DiscordRPC();
 	});
 } */
 
+
 rpc.client.on("ready", async () => {
-	console.log("Connected!");
+	logger.info("Connected!");
 	await rpc.setActivity(await wf.getPlayerStats());
 	setInterval(async () => {
 		await rpc.setActivity(await wf.getPlayerStats());
@@ -23,18 +27,18 @@ rpc.client.on("ready", async () => {
 
 // C-c break or whatever (or gui whenever I get there)
 process.on("SIGINT", async () => {
-	console.error("attempting to shut down gracefully (emergency exit in 5 seconds)");
+	logger.info("attempting to shut down gracefully (emergency exit in 5 seconds)");
 	try {
 		setTimeout(() => {
-			console.error("EMERGENCY EXIT");
+			logger.warn("EMERGENCY EXIT");
 			process.exit(2);
 		}, 5000);
 		await rpc.client.destroy();
-		console.error("RPC client destroyed. ( ͡° ͜ʖ ͡°)︻̷┻̿═━一- ");
+		logger.info("RPC client destroyed. ( ͡° ͜ʖ ͡°)︻̷┻̿═━一- ");
 		process.exit(0);
 	} catch (error) {
-		console.error(error.stack);
-		console.error("lol rip, failed to destroy RPC client.");
+		logger.warn("lol rip, failed to destroy RPC client.");
+		logger.error(error.stack);
 		process.exit(1);
 	}
 });
