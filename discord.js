@@ -5,7 +5,7 @@ import { Logger } from "./logger.js";
 
 import states from "./states.json" with { type: "json" };
 
-const logger = new Logger("Discord", process.env["VERBOSE_LOGS"]);
+const logger = new Logger("Discord", process.env["VERBOSITY"]);
 
 class DiscordRPC {
 	CLIENT_ID = process.env.CLIENT_ID ?? "1432098284922736740";

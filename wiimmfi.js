@@ -7,7 +7,7 @@ import { Logger } from "./logger.js";
 
 import states from "./states.json" with { type: "json" };
 
-const logger = new Logger("Wiimmfi", process.env["VERBOSE_LOGS"]);
+const logger = new Logger("Wiimmfi", process.env["VERBOSITY"]);
 
 export class Wiimmfi {
 	trackNames = [

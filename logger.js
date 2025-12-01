@@ -16,9 +16,9 @@ export class Logger {
 	/**
 	 * Logger
 	 * @param {String} whoami Name of the module using this logger
-	 * @param {Boolean} verbosity Show verbose logs? You should probably set this up to inherit from your module's parent.
+	 * @param {"INFO"|"WARN"|"ERROR"|String} verbosity Show verbose logs? You should probably set this up to inherit from your module's parent.
 	 */
-	constructor(whoami, verbosity = false) {
+	constructor(whoami, verbosity = "INFO") {
 		this.isVerbose = verbosity;
 		this.whoami = whoami;
 	}
@@ -49,7 +49,8 @@ export class Logger {
 			date: timePad(now.getDate()),
 			hours: timePad(now.getHours()),
 			minutes: timePad(now.getMinutes()),
-			seconds: timePad(now.getSeconds())
+			seconds: timePad(now.getSeconds()),
+			milliseconds: now.getMilliseconds().padEnd(3, "0")
 		}
 
 		// "ah yes let's have only one implementation of ISO8601, nobody's ever going to use any other format specified in the international standard."
@@ -75,6 +76,10 @@ export class Logger {
 		}
 
 		const formattedText = `${timestamp} ${severityText} [${this.whoami}] ${text}`
+
+		// very rudimentary but it works I think maybe
+		// I haven't tested it :3
+		let necessary = severityRanking.indexOf(severity) >= severityRanking.indexOf(this.verbosity);
 
 		if (necessary) {
 			console.log(formattedText)
