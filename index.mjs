@@ -1,5 +1,4 @@
 import "dotenv/config";
-import fs from "fs";
 import process from "process";
 
 import { DiscordRPC } from "./discord.js";
@@ -16,13 +15,16 @@ logger.showHeader();
 	});
 } */
 
-if (!fs.existsSync("./.env")) {
-	logger.error("Can't find .env file.");
-	logger.warn("copy .env.example to .env and fill out the values.");
-	process.exit(2);
-
-	// not even gonna check for correct .env values cus that's your own problem
+const requiredEnvVariables = ["VERBOSITY", "HEADLESS_BROWSER", "USERAGENT", "CF_CLEARANCE", "PID", "MKW_ANA_ENABLED", "MKW_ANA_COMMAND"];
+let hasRequiredEnvVariables = true; // until proven false
+for (const envVar of requiredEnvVariables) {
+	if (typeof process.env[envVar] === "undefined") {
+		logger.error(`Please set ${envVar} in your .env or in the command line.`);
+		hasRequiredEnvVariables = false;
+	}
 }
+
+if (!hasRequiredEnvVariables) process.exit(2)
 
 rpc.client.on("ready", async () => {
 	logger.info("Connected!");
