@@ -96,7 +96,11 @@ export class Wiimmfi {
 		await this.page.goto(this.watchUrl);
 
 		// just in case the captcha is incredibly silly
-		await this.page.waitForSelector(".nb-fixed#navbar");
+		try {
+			await this.page.waitForSelector(".nb-fixed#navbar")
+		} catch(error) {
+			logger.error(error.stack, "timed out waiting for cloudflare captcha");
+		}
 	}
 
 	fillTemplateState(stateName) {
