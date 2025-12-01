@@ -73,6 +73,8 @@ export class Wiimmfi {
 
 		let headlessnessOfBrowser = process.env["HEADLESS_BROWSER"] !== "false"
 
+		logger.info("launching puppeteer browser...")
+
 		this.browser = await puppeteer.launch({ headless: headlessnessOfBrowser });
 		this.page = await this.browser.newPage();
 

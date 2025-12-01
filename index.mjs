@@ -5,7 +5,6 @@ import process from "process";
 import { DiscordRPC } from "./discord.js";
 import { Logger } from "./logger.js";
 import { Wiimmfi } from "./wiimmfi.js";
-import path from "path";
 
 const rpc = new DiscordRPC();
 const logger = new Logger("MKW RPC", process.env["VERBOSITY"]);
@@ -17,7 +16,7 @@ logger.showHeader();
 	});
 } */
 
-if (!fs.existsSync(path.join(__dirname, ".env"))) {
+if (!fs.existsSync("./.env")) {
 	logger.error("Can't find .env file.");
 	logger.warn("copy .env.example to .env and fill out the values.");
 	process.exit(2);
