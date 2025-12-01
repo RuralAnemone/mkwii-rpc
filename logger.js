@@ -13,6 +13,11 @@ export class Logger {
 ║                                                                   ║
 ╚═══════════════════════════════════════════════════════════════════╝`
 
+	/**
+	 * Logger
+	 * @param {String} whoami Name of the module using this logger
+	 * @param {Boolean} verbosity Show verbose logs? You should probably set this up to inherit from your module's parent.
+	 */
 	constructor(whoami, verbosity = false) {
 		this.isVerbose = verbosity;
 		this.whoami = whoami;
@@ -30,14 +35,25 @@ export class Logger {
 	/**
 	 * Log a message to the console with a timestamp and its severity
 	 * @param {String} text text to log
-	 * @param {{"INFO"|"WARN"|"ERROR"}} severity log level (INFO, WARN, ERROR)
+	 * @param {"INFO"|"WARN"|"ERROR"|String} severity severity level of log. defaults to "INFO"
 	 */
-	log(text, severity) {
+	#log(text, severity = "INFO") {
 		const now = new Date();
-		
+
+		const timePad = time => time.toString().padStart(2, "0");
+
+		// getMonth is zero-indexed, nothing else is.
+		const padded = {
+			month: timePad((now.getMonth() + 1)),
+			date: timePad(now.getDate()),
+			hours: timePad(now.getHours()),
+			minutes: timePad(now.getMinutes()),
+			seconds: timePad(now.getSeconds())
+		}
+
 		// "ah yes let's have only one implementation of ISO8601, nobody's ever going to use any other format specified in the international standard."
 		// – ECMA
-		const timestamp = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}.${now.getMilliseconds()}`;
+		const timestamp = `${now.getFullYear()}-${padded.month}-${padded.date} ${padded.hours}:${padded.minutes}:${padded.seconds}.${now.getMilliseconds()}`;
 
 		let severityText = "";
 
@@ -52,7 +68,8 @@ export class Logger {
 				severityText = chalk.bgRed.white("ERROR")
 				break;
 			default:
-				severityText = "     ";
+				// enforce 5 characters
+				severityText = chalk.bold(severity.slice(0,5).padEnd(5));
 				break;
 		}
 
@@ -63,5 +80,31 @@ export class Logger {
 		} else if (this.isVerbose) {
 			console.log(formattedText);
 		}
+	}
+
+	// aliases
+
+	/**
+	 * Log to the console with INFO level severity.
+	 * @param {String} text Text to log.
+	 */
+	info(text) {
+		this.#log(text, "INFO");
+	}
+
+	/**
+	 * Log to the console with WARN level severity.
+	 * @param {String} text Text to log.
+	 */
+	warn(text) {
+		this.#log(text, "WARN");
+	}
+
+	/**
+	 * Log to the console with ERROR level severity.
+	 * @param {String} text Text to log.
+	 */
+	error(text) {
+		this.#log(text, "ERROR");
 	}
 }
