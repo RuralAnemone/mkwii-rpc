@@ -22,7 +22,7 @@ initial RPC script scaffolding from https://github.com/ThunderDoesDev/Custom-RPC
 
 therefore this script doesn't abuse the service.
 
-this script <!--does--> will do <!--don't convert the rest to infinitive or future perfect or whatever bro it's fine--> the following:
+this script does the following:
 
 - open `wiimmfi.de/stats/mkw/room/p{pid}`[^scraper] and parse room and player details into a (configurable?) discord rich presence[^rpc]
 - if you configure `mkw-ana`, use that to glean extra useful and configurable details
