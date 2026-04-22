@@ -5,8 +5,6 @@ const stealthPlugin = pkg;
 
 import { Logger } from "./logger.js";
 
-import states from "./states.json" with { type: "json" };
-
 const logger = new Logger("Wiimmfi", process.env["VERBOSITY"]);
 
 export class Wiimmfi {
@@ -103,52 +101,14 @@ export class Wiimmfi {
 		}
 	}
 
-	fillTemplateState(stateName) {
-		const translations = {
-			"START": this.start,
-			"USERNAME": this.username,
-			"VR": this.vr,
-			"CURRENT TRACK DISPLAY NAME": this.currentTrack?.displayName,
-			"CURRENT TRACK FILE NAME": this.currentTrack?.fileName,
-			"PLAYER COUNT": this.playerCount
-		}
-
-		// pass object by value, assuming it uses primitives (:
-		// see https://stackoverflow.com/a/24273055/17834675
-		this.currentState = JSON.parse(JSON.stringify(states[stateName]));
-
-		// need a local copy of states object (hence modifiedStates), use imported as reference
-		const recurseFill = obj => {
-			for (const key of Object.keys(obj)) {
-				if (typeof obj[key] === "object" && obj[key] !== null) {
-					recurseFill(obj[key]);
-				}
-
-				// get {stuff in braces} but chop the {} off
-				typeof obj[key] === "string" && obj[key].match(/({.+?})+/g)?.map(e=>e.slice(1,-1))
-				.forEach(placeholder => {
-					// additional check to preserve primitives; if replacing the entire obj[key], pass value instead of string.replace
-					if (obj[key] === "{" + placeholder + "}") {
-						obj[key] = translations[placeholder];
-					} else {
-						obj[key] = obj[key].replaceAll(`{${placeholder}}`, translations[placeholder]);
-					}
-				});
-
-			}
-		}
-
-		recurseFill(this.currentState);
-
-		return this.currentState;
-	}
-
 	async getPlayerStats() {
-		/* if (this.page.url() !== this.watchUrl) */ await this.page.goto(this.watchUrl);
+		await this.page.goto(this.watchUrl);
+
+		const templateFiller = new TemplateFiller
 
 		if (await this.page.$(".warn") && await this.page.$eval(".warn", e => e.innerText === "No room found!")) {
 			logger.info("not in game");
-			return this.fillTemplateState("NOT_IN_GAME");
+			return TemplateFiller.fillTemplateState("NOT_IN_GAME");
 		}
 
 		/* await this.page.waitForNavigation({

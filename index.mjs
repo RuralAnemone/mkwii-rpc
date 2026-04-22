@@ -3,6 +3,7 @@ import process from "process";
 
 import { DiscordRPC } from "./discord.js";
 import { Logger } from "./logger.js";
+import { StateManager } from "./stateManager.js";
 import { Wiimmfi } from "./wiimmfi.js";
 
 const rpc = new DiscordRPC();
