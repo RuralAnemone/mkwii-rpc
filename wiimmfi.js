@@ -1,5 +1,8 @@
 // ⚠️ CLOUDFLARE'S CAPTCHA CHANGED AND THIS WON'T WORK FOR THE TIME BEING ⚠️
 
+// TODO: Update Cloudflare captcha bypass / find some other workaround
+// TODO: switch from PID to FC user searching
+
 import puppeteer from "puppeteer-extra";
 import pkg from "puppeteer-extra-plugin-stealth";
 // very silly workaround
