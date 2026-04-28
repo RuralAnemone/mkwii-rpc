@@ -1,9 +1,12 @@
+// ⚠️ CLOUDFLARE'S CAPTCHA CHANGED AND THIS WON'T WORK FOR THE TIME BEING ⚠️
+
 import puppeteer from "puppeteer-extra";
 import pkg from "puppeteer-extra-plugin-stealth";
 // very silly workaround
 const stealthPlugin = pkg;
 
 import { Logger } from "./logger.js";
+import { StateManager } from "./stateManager.js";
 
 const logger = new Logger("Wiimmfi", process.env["VERBOSITY"]);
 
@@ -55,8 +58,7 @@ export class Wiimmfi {
 
 	currentState = {};
 
-	// default to my main mii's stats page
-	watchUrl = `https://wiimmfi.de/stats/mkw/room/p${process.env["PID"] ?? "603153751"}`;
+	watchUrl = `https://wiimmfi.de/stats/mkw/room/p${process.env["PID"]}`;
 
 	constructor(userAgent, cookie) {
 		this.USERAGENT = userAgent;
@@ -104,11 +106,11 @@ export class Wiimmfi {
 	async getPlayerStats() {
 		await this.page.goto(this.watchUrl);
 
-		const templateFiller = new TemplateFiller
+		const stateManager = new StateManager();
 
 		if (await this.page.$(".warn") && await this.page.$eval(".warn", e => e.innerText === "No room found!")) {
 			logger.info("not in game");
-			return TemplateFiller.fillTemplateState("NOT_IN_GAME");
+			return stateManager.getTemplateState("NOT_IN_GAME");
 		}
 
 		/* await this.page.waitForNavigation({

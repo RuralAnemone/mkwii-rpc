@@ -1,9 +1,7 @@
-import { Wiimmfi } from "./wiimmfi.js";
-
 import states from "./states.json" with { type: "json" };
 
 export class StateManager {
-	constructor(source) {
+	constructor() {
 		this.data = data;
 
 		this.translations = {
