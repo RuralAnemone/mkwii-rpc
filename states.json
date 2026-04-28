@@ -15,8 +15,8 @@
 		"startTimestamp": "{START}",
 		"largeImageKey": "{CURRENT TRACK FILE NAME}",
 		"largeImageText": "{CURRENT TRACK DISPLAY NAME}",
-		"smallImageKey": "https://patchy.moe/-/file/jwdRx",
-		"smallImageText": "test mii",
+		"smallImageKey": "{MII IMAGE}",
+		"smallImageText": "{MII NAME}",
 		"instance": false,
 		"playerSize": "{PLAYER COUNT}",
 		"playerMax": 12

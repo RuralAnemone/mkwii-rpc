@@ -1,5 +1,6 @@
 // ⚠️ CLOUDFLARE'S CAPTCHA CHANGED AND THIS WON'T WORK FOR THE TIME BEING ⚠️
 
+// TODO: finish refactoring to StateManager
 // TODO: Update Cloudflare captcha bypass / find some other workaround
 // TODO: switch from PID to FC user searching
 

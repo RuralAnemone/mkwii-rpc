@@ -1,7 +1,7 @@
 import states from "./states.json" with { type: "json" };
 
 export class StateManager {
-	constructor() {
+	constructor(data) {
 		this.data = data;
 
 		this.translations = {
@@ -11,6 +11,8 @@ export class StateManager {
 			"CURRENT TRACK DISPLAY NAME": data.currentTrack?.displayName,
 			"CURRENT TRACK FILE NAME": data.currentTrack?.fileName,
 			"PLAYER COUNT": data.playerCount,
+			"MII IMAGE": "",
+			"MII NAME": "",
 		};
 	}
 	
